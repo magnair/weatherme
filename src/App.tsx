@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+
+//import logo from './logo.svg';
+//import jalla from './logo.svg';
+
 import './App.css';
+import Weather from './weather';
+import About from './about';
+import Menu from './components/menuComponent';
+import KanbanBoard from './components/kanbanComponent';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <Router>
+      <Menu />
+      <Routes>
+        <Route path="/" element={<Weather />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Weather />} />
+        <Route path="/board" element={<KanbanBoard />} />
+      </Routes>
+    </Router>
     </div>
   );
 }
