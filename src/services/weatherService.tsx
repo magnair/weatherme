@@ -1,10 +1,19 @@
 // src/services/weatherService.ts
 export const fetchWeatherData = async (latitude: string, longitude: string) => {
-    const response = await fetch(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`);
+
+    const response =  await fetch(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`, {
+        // method: 'GET',
+        // headers: {
+        //     'Content-Type': 'application/json',
+        //     'User-Agent': '"AcmeWeatherApp/0.9 github.com/acmeweatherapp',
+        //     'Access-Control-Allow-Origi': '*',
+        // },
+    });
 
     //https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=59.34&lon=10.49&altitude=90
     
     if (!response.ok) {
+        console.log(response.blob);
         throw new Error('Failed to fetch weather data');
     }
 

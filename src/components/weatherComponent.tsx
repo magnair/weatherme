@@ -24,10 +24,11 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ weatherData }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Time</TableCell>
-                        <TableCell>Temperature (°C)</TableCell>
-                        <TableCell>Wind Speed (m/s)</TableCell>
                         <TableCell>Wind Direction (°)</TableCell>
                         <TableCell>Weather</TableCell>
+                        <TableCell>Wind Speed (m/s)</TableCell>
+                        <TableCell>Temperature (°C)</TableCell>
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -35,15 +36,18 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ weatherData }) => {
                         return (
                             <TableRow key={index}>
                                 <TableCell>{new Date(data.time).toLocaleString()}</TableCell>
-                                <TableCell>{data.time}</TableCell>
-                                <TableCell>{data.temperature}</TableCell>
-                                <TableCell>{data.windSpeed}</TableCell>
+
                                 <TableCell>
                                     {WindArrow({ direction: data.windDirection })}
                                 </TableCell>
                                 <TableCell>
                                     <img src={`/icons/Weather/png/${data.weatherCode}.png`} width="35" alt="Weather Icon" />
                                 </TableCell>
+                                  
+                                <TableCell style={{ color: data.windSpeed > 5 ? 'green' : 'inherit' }}>
+                                    {data.windSpeed}
+                                </TableCell>
+                                <TableCell>{data.temperature}</TableCell>
                             </TableRow>
                         );
                     })}

@@ -15,7 +15,7 @@ const WindArrow = ({ direction }: { direction: number }) => {
         points="50,10 40,40 50,35 60,40"
         fill="black"
         stroke="black"
-        strokeWidth="1"
+        strokeWidth="0"
       />
       <line
         x1="50"
