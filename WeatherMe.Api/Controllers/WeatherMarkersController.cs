@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherMe.Api.Models;
 
+
 namespace WeatherMe.Api.Controllers;
 
 [ApiController]
