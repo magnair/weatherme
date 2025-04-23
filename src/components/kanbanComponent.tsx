@@ -25,7 +25,7 @@ interface Task {
 }
 
 // Define the initial state
-interface Column {
+interface ColumnType {
   id: string;
   title: string;
   taskIds: string[];
@@ -33,7 +33,7 @@ interface Column {
 
 interface Data {
   tasks: { [key: string]: Task };
-  columns: { [key: string]: Column };
+  columns: { [key: string]: ColumnType };
   columnOrder: string[];
 }
 

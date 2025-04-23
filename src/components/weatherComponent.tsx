@@ -2,7 +2,7 @@
 import React from 'react';
 import WindArrow from './windDirectionIcon';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import Weather from '../weather';
+
 
 interface WeatherData {
     time: string;

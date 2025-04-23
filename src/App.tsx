@@ -9,9 +9,7 @@ import Weather from './weather';
 import About from './about';
 import Menu from './components/menuComponent';
 import KanbanBoard from './components/kanbanComponent';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Box, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-import MapIcon from '@mui/icons-material/Map';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 function App() {
