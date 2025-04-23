@@ -1,5 +1,6 @@
 import React from 'react';
 import MapComponent from './components/MapComponent';
+import Map2Component from './components/Map2Component';
 
 //import logo from './logo.svg';
 //import jalla from './logo.svg';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/services" element={<Weather />} />
           <Route path="/board" element={<KanbanBoard />} />
           <Route path="/map" element={<MapComponent />} />
+          <Route path="/map2" element={<Map2Component />} />
         </Routes>
 
     </Router>

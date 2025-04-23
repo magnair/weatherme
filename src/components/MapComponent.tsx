@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, Paper, ToggleButton, Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PinDropIcon from '@mui/icons-material/PinDrop';
@@ -31,8 +31,7 @@ const MapComponent: React.FC = () => {
   const [tempMarker, setTempMarker] = useState<{lat: number, lng: number} | null>(null);
   const [newLabel, setNewLabel] = useState('');
 
-  // Add custom marker icon configuration
-  const customMarkerIcon = {
+  const getCustomMarkerIcon = () => ({
     path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
     fillColor: "#FF0000",
     fillOpacity: 1,
@@ -41,7 +40,7 @@ const MapComponent: React.FC = () => {
     scale: 2,
     anchor: new google.maps.Point(12, 24),
     labelOrigin: new google.maps.Point(12, 9)
-  };
+  });
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (!isPlacingMarker || !event.latLng) return;
@@ -86,6 +85,10 @@ const MapComponent: React.FC = () => {
     setMarkers(newMarkers);
   };
 
+  const onLoad = useCallback((map: google.maps.Map) => {
+    // Do something with map
+  }, []);
+
   return (
     <Box sx={{ width: '100vw', height: 'calc(100vh - 64px)', position: 'relative' }}>
       <Paper sx={{
@@ -107,12 +110,13 @@ const MapComponent: React.FC = () => {
         </ToggleButton>
       </Paper>
       
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ''}>
+      <LoadScript googleMapsApiKey='AIzaSyA4RdNHzKv_NXhtclsTx54rj-G63fIubSM'>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={11}
           onClick={handleMapClick}
+          onLoad={onLoad}
         >
           {markers.map((marker, index) => (
             <Marker
@@ -123,7 +127,7 @@ const MapComponent: React.FC = () => {
                 fontWeight: 'bold',
                 color: 'white'
               }}
-              icon={customMarkerIcon}
+              icon={getCustomMarkerIcon()}
               onRightClick={() => handleMarkerRightClick(index)}
               draggable={true}
               onDragEnd={(e) => handleMarkerDragEnd(index, e)}

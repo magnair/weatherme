@@ -52,6 +52,7 @@ const Menu: React.FC = () => {
           { text: 'Board', icon: <BuildIcon /> },
           { text: 'Contact', icon: <ContactMailIcon /> },
           { text: 'Map', icon: <MapIcon /> }, // Added Map menu item
+          { text: 'Map2', icon: <MapIcon /> }, // Added Map menu item
         ].map(({ text, icon }) => (
           <ListItem key={text} component={Link} to={`/${text.toLowerCase()}`}>
             <ListItemIcon>{icon}</ListItemIcon>
