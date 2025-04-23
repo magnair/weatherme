@@ -1,5 +1,6 @@
 {
   "name": "weatherme",
+  "homepage": "https://magnair.github.io/weatherme/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
