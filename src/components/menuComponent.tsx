@@ -12,11 +12,12 @@ import {
   styled,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close'; // CHANGE: Added Close icon
+import CloseIcon from '@mui/icons-material/Close';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import BuildIcon from '@mui/icons-material/Build';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
+import MapIcon from '@mui/icons-material/Map'; // Added Map icon
 import { Link } from 'react-router-dom';
 
 // Styled component for the Drawer to customize its width
@@ -37,10 +38,10 @@ const Menu: React.FC = () => {
   const list = () => (
     <div role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <IconButton
-        onClick={toggleDrawer(false)} // CHANGE: Close the drawer when clicking the close button
-        style={{ justifyContent: 'flex-end', margin: '10px' }} // Add margin for better positioning
+        onClick={toggleDrawer(false)}
+        style={{ justifyContent: 'flex-end', margin: '10px' }}
       >
-        <CloseIcon /> {/* CHANGE: Close button */}
+        <CloseIcon />
         <Typography variant="body2" style={{ marginLeft: '8px' }}>Close</Typography>
       </IconButton>
       <List>
@@ -50,6 +51,7 @@ const Menu: React.FC = () => {
           { text: 'Services', icon: <BuildIcon /> },
           { text: 'Board', icon: <BuildIcon /> },
           { text: 'Contact', icon: <ContactMailIcon /> },
+          { text: 'Map', icon: <MapIcon /> }, // Added Map menu item
         ].map(({ text, icon }) => (
           <ListItem key={text} component={Link} to={`/${text.toLowerCase()}`}>
             <ListItemIcon>{icon}</ListItemIcon>
