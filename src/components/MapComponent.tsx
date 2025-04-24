@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Box, Paper, ToggleButton, Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PinDropIcon from '@mui/icons-material/PinDrop';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 const containerStyle = {
   width: '100vw',
@@ -30,6 +31,11 @@ const MapComponent: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tempMarker, setTempMarker] = useState<{lat: number, lng: number} | null>(null);
   const [newLabel, setNewLabel] = useState('');
+  const [showMyLocation, setShowMyLocation] = useState(false);
+  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+  const mapRef = React.useRef<google.maps.Map | null>(null);
+  const [mapCenter, setMapCenter] = useState(center);
+  const watchId = React.useRef<number | null>(null);
 
   const getCustomMarkerIcon = () => ({
     path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
@@ -41,6 +47,60 @@ const MapComponent: React.FC = () => {
     anchor: new google.maps.Point(12, 24),
     labelOrigin: new google.maps.Point(12, 9)
   });
+
+  const getUserLocation = () => {
+    if (!navigator.geolocation) return;
+
+    // Get initial position immediately
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const newLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setUserLocation(newLocation);
+        setMapCenter(newLocation);
+      },
+      (error) => console.error('Error getting location:', error)
+    );
+
+    // Then start watching for updates
+    watchId.current = navigator.geolocation.watchPosition(
+      (position) => {
+        const newLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        setUserLocation(newLocation);
+        setMapCenter(newLocation);
+      },
+      (error) => console.error('Error watching location:', error)
+    );
+  };
+
+  const toggleMyLocation = () => {
+    const newShowMyLocation = !showMyLocation;
+    setShowMyLocation(newShowMyLocation);
+    
+    if (newShowMyLocation) {
+      getUserLocation();
+    } else {
+      // Cleanup location watching
+      if (watchId.current) {
+        navigator.geolocation.clearWatch(watchId.current);
+        watchId.current = null;
+      }
+    }
+  };
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      if (watchId.current) {
+        navigator.geolocation.clearWatch(watchId.current);
+      }
+    };
+  }, []);
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (!isPlacingMarker || !event.latLng) return;
@@ -86,7 +146,7 @@ const MapComponent: React.FC = () => {
   };
 
   const onLoad = useCallback((map: google.maps.Map) => {
-    // Do something with map
+    mapRef.current = map;
   }, []);
 
   return (
@@ -99,22 +159,42 @@ const MapComponent: React.FC = () => {
         padding: 2,
         backgroundColor: 'rgba(255, 255, 255, 0.9)'
       }}>
-        <ToggleButton
-          value="check"
-          selected={isPlacingMarker}
-          onChange={() => setIsPlacingMarker(!isPlacingMarker)}
-          sx={{ mb: 1 }}
-        >
-          <PinDropIcon />
-          <Typography sx={{ ml: 1 }}>Place Marker</Typography>
-        </ToggleButton>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 1 }}>
+          <ToggleButton
+            value="check"
+            selected={isPlacingMarker}
+            onChange={() => setIsPlacingMarker(!isPlacingMarker)}
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            <PinDropIcon />
+            <Typography sx={{ ml: 1 }}>Place Marker</Typography>
+          </ToggleButton>
+          <ToggleButton
+            value="check"
+            selected={isPlacingMarker}
+            onChange={() => setIsPlacingMarker(!isPlacingMarker)}
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            <PinDropIcon sx={{ mr: 1 }} />
+            <Typography>Place Marker Again</Typography>
+          </ToggleButton>
+          <ToggleButton
+            value="location"
+            selected={showMyLocation}
+            onChange={toggleMyLocation}
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            <MyLocationIcon sx={{ mr: 1 }} />
+            <Typography>My Location</Typography>
+          </ToggleButton>
+        </Box>
       </Paper>
       
       <LoadScript googleMapsApiKey='AIzaSyA4RdNHzKv_NXhtclsTx54rj-G63fIubSM'>
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
-          zoom={11}
+          center={mapCenter}
+          zoom={showMyLocation ? 15 : 11}
           onClick={handleMapClick}
           onLoad={onLoad}
         >
@@ -133,6 +213,19 @@ const MapComponent: React.FC = () => {
               onDragEnd={(e) => handleMarkerDragEnd(index, e)}
             />
           ))}
+          {showMyLocation && userLocation && (
+            <Marker
+              position={userLocation}
+              icon={{
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                fillColor: "#4285F4",
+                fillOpacity: 1,
+                strokeColor: "#FFFFFF",
+                strokeWeight: 2,
+              }}
+            />
+          )}
         </GoogleMap>
       </LoadScript>
 

@@ -1,0 +1,103 @@
+/* Header styles */
+.MuiAppBar-root.header, 
+.header {
+  background-color: #002d5a !important; /* Bouvet header dark blue */
+  min-height: 80px !important;
+  box-shadow: none !important;
+  border-bottom: none;
+}
+
+.logo {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.4rem !important;
+  letter-spacing: 0;
+  padding: 0 16px;
+}
+
+/* Desktop menu styles */
+.desktopMenu {
+  flex-grow: 1;
+  margin-left: 48px;
+}
+
+.desktopMenu .menuItem,
+.MuiTypography-root.menuItem {
+  color: #ffffff !important;
+  padding: 30px 24px;
+  text-decoration: none;
+  font-size: 1.2rem !important;  /* Increased from 1rem to 1.1rem */
+  font-weight: 400;
+  position: relative;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.menuItem:hover {
+  opacity: 1;
+}
+
+.menuItem::after {
+  content: "";
+  position: absolute;
+  bottom: 25px;
+  left: 24px;
+  right: 24px;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.2s ease;
+  margin: 0 auto;
+}
+
+.menuItem:hover::after {
+  width: calc(100% - 48px);
+}
+
+/* Mobile menu styles */
+.mobileMenuButton {
+  color: #ffffff !important;
+  opacity: 0.9;
+}
+
+.mobileMenuButton:hover {
+  opacity: 1;
+}
+
+.drawer {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.drawerItem {
+  color: #333;
+}
+
+.drawerItem:hover {
+  background-color: rgba(255, 140, 0, 0.08);
+  color: #ff8c00;
+}
+
+.drawerIcon {
+  color: inherit;
+  min-width: 40px;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .desktopMenu {
+    display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .mobileMenuButton {
+    display: none;
+  }
+}
