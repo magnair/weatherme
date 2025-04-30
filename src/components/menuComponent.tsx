@@ -91,31 +91,32 @@ const Menu: React.FC = () => {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
-          className: "drawer"  // Fix: Use correct object syntax instead of JSX attribute syntax
+          className: "drawer-paper"
         }}
       >
-        <Box sx={{ textAlign: 'right' }}>
-          <IconButton onClick={() => setDrawerOpen(false)}>
+        <Box className="drawer-header">
+          <IconButton 
+            onClick={() => setDrawerOpen(false)}
+            className="drawer-close-button"
+          >
             <CloseIcon />
           </IconButton>
         </Box>
-        <List>
+        <List className="drawer-list">
           {menuItems.map((item) => (
             <ListItem
-              key={item.text}
+              key={item.text}              
               component={Link}
               to={item.path}
               onClick={() => setDrawerOpen(false)}
-              className="drawerItem"
+              className="drawer-item"
             >
-              <ListItemIcon className="drawerIcon">
+              <ListItemIcon className="drawer-icon">
                 {item.icon}
               </ListItemIcon>
               <ListItemText 
                 primary={item.text} 
-                primaryTypographyProps={{
-                  sx: { fontWeight: 500 }
-                }}
+                className="drawer-text"
               />
             </ListItem>
           ))}

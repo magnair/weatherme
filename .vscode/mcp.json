@@ -1,0 +1,17 @@
+{
+"inputs": [  
+  {
+    "type": "promptString"
+  }
+],
+"servers": {  
+  "fetch": {
+    "command": "uvx",
+    "args": ["mcp-server-fetch"]
+  },
+  "my-mcp-server-6e71dd03": {
+    "type": "sse",
+    "url": "http://github.com/github/github-mcp-server"
+  }
+ }
+}

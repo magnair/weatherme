@@ -1,44 +1,52 @@
 /* Header styles */
 .MuiAppBar-root.header, 
 .header {
-  background-color: #002d5a !important; /* Bouvet header dark blue */
+  background-color: var(--color-secondary) !important;
   min-height: 80px !important;
   box-shadow: none !important;
   border-bottom: none;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
 }
 
 .logo {
-  color: #ffffff;
+  display: block;
+  color: var(--color-white);
   text-decoration: none;
-  font-weight: 700;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.4rem !important;
-  letter-spacing: 0;
-  padding: 0 16px;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-lg);
+  padding: 0 var(--spacing-md);
 }
 
 /* Desktop menu styles */
 .desktopMenu {
+  display: flex;
   flex-grow: 1;
-  margin-left: 48px;
+  margin-left: var(--spacing-xxl);
 }
 
 .desktopMenu .menuItem,
 .MuiTypography-root.menuItem {
-  color: #ffffff !important;
-  padding: 30px 24px;
+  color: var(--color-white) !important;
+  padding: var(--spacing-xl) var(--spacing-lg);
   text-decoration: none;
-  font-size: 1.2rem !important;  /* Increased from 1rem to 1.1rem */
-  font-weight: 400;
-  position: relative;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size-md) !important;
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-base);
   letter-spacing: 0;
   opacity: 0.9;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--transition-default);
 }
 
 .menuItem:hover {
   opacity: 1;
+}
+
+.menuItem {
+  display: inline-block;  /* Add this to contain the underline */
+  position: relative;
 }
 
 .menuItem::after {
@@ -46,16 +54,14 @@
   position: absolute;
   bottom: 25px;
   left: 24px;
-  right: 24px;
   width: 0;
   height: 2px;
-  background-color: #ffffff;
-  transition: width 0.2s ease;
-  margin: 0 auto;
+  background-color: var(--color-white);
+  transition: width var(--transition-default);
 }
 
 .menuItem:hover::after {
-  width: calc(100% - 48px);
+  width: calc(100% - 48px);  /* Adjust to match the padding */
 }
 
 /* Mobile menu styles */
@@ -71,17 +77,17 @@
 .drawer {
   width: 100%;
   max-width: 400px;
-  padding: 20px;
-  background-color: #fff;
+  padding: var(--spacing-lg);
+  background-color: var(--color-secondary);
 }
 
 .drawerItem {
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .drawerItem:hover {
-  background-color: rgba(255, 140, 0, 0.08);
-  color: #ff8c00;
+  background-color: rgba(var(--color-orange), 0.08);
+  color: var(--color-orange);
 }
 
 .drawerIcon {
@@ -100,4 +106,56 @@
   .mobileMenuButton {
     display: none;
   }
+}
+
+.drawer-paper {
+  background-color: #11133C !important;
+  color: #ffffff !important;
+  width: 320px !important;
+}
+
+.drawer-header {
+  background-color: #11133C;
+}
+
+.drawer-close-button {
+  color: #ffffff !important;
+}
+
+.drawer-list {
+  padding: 24px !important;
+}
+
+.drawer-item {
+  position: relative;
+  transition: opacity var(--transition-default);
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.drawer-text {
+  position: relative;
+  color: var(--color-cream) !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+.drawer-text::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-white);
+  transition: width var(--transition-default);
+}
+
+.drawer-item:hover .drawer-text::after {
+  width: 100%;
+}
+
+.drawer-icon {
+  color: #ffffff !important;
 }

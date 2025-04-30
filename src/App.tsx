@@ -19,6 +19,7 @@ function App() {
       <Menu />
         <Routes>
           <Route path="/" element={<Weather />} />
+          <Route index element={<Weather />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Weather />} />
           <Route path="/board" element={<KanbanBoard />} />

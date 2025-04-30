@@ -1,0 +1,31 @@
+:root {
+  /* Colors */
+  --color-primary: #002d5a;
+  --color-secondary: #11133C;
+  --color-white: #ffffff;
+  --color-cream: #F9EAD4;
+  --color-orange: #ff8c00;
+  --color-text-dark: #333333;
+
+  /* Typography */
+  --font-family-base: 'Inter', sans-serif;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.2rem;
+  --font-size-lg: 1.4rem;
+  
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 48px;
+
+  /* Transitions */
+  --transition-default: 0.2s ease;
+}
