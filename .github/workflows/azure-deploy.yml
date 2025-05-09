@@ -3,7 +3,8 @@ name: Deploy API and Database to Azure
 on:
   push:
     branches:
-      - main
+      - master
+  workflow_dispatch:
 
 env:
   AZURE_RESOURCE_GROUP: rg-weatherme # Set your Azure Resource Group
