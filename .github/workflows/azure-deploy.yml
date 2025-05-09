@@ -1,0 +1,61 @@
+name: Deploy API and Database to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: <your-app-service-name> # Set your Azure App Service name
+  AZURE_RESOURCE_GROUP: <your-resource-group> # Set your Azure Resource Group
+  DOTNET_VERSION: '8.0.x'
+  API_PROJECT_PATH: WeatherMe.Api/WeatherMe.Api.csproj
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.API_PROJECT_PATH }}
+
+      - name: Build
+        run: dotnet build ${{ env.API_PROJECT_PATH }} --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ${{ env.API_PROJECT_PATH }} --configuration Release --output ./publish --no-build
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./publish
+
+      - name: Run EF Core Migrations
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: |
+          dotnet tool install --global dotnet-ef
+          export PATH="$PATH:/home/runner/.dotnet/tools"
+          dotnet ef database update --project ${{ env.API_PROJECT_PATH }} --connection "$AZURE_SQL_CONNECTION_STRING"
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Azure resources (Bicep)
+        run: |
+          az deployment group create \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --template-file infra/main.bicep \
+            --parameters postgresPassword=${{ secrets.POSTGRES_PASSWORD }}
