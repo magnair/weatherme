@@ -52,6 +52,10 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./publish
 
+      - name: Debug Connection String
+        run: |
+          echo "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" | sed 's/Password=[^;]*/Password=***MASKED***/' || echo "Connection string is empty"
+
       - name: Run EF Core Migrations
         env:
           AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
