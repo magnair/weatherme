@@ -34,7 +34,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'ConnectionStrings__DefaultConnection'
-          value: 'Host=${postgresServer.name}.postgres.database.azure.com;Database=weatherme;Username=${postgresAdmin}@${postgresServer.name};Password=${postgresPassword};Ssl Mode=Require'
+          value: 'Host=${postgresServer.name}.postgres.database.azure.com;Database=weatherme;Username=${postgresAdmin};Password=${postgresPassword};Ssl Mode=Require'
         }
       ]
     }
@@ -79,4 +79,4 @@ resource postgresDb 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2022-12
 output webAppName string = webApp.name
 output webAppDefaultHostName string = webApp.properties.defaultHostName
 output postgresServerFqdn string = postgresServer.properties.fullyQualifiedDomainName
-output postgresConnectionString string = 'Host=${postgresServer.name}.postgres.database.azure.com;Database=weatherme;Username=${postgresAdmin}@${postgresServer.name};Password=${postgresPassword};Ssl Mode=Require'
+output postgresConnectionString string = 'Host=${postgresServer.name}.postgres.database.azure.com;Database=weatherme;Username=${postgresAdmin};Password=${postgresPassword};Ssl Mode=Require'
