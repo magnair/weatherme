@@ -1,7 +1,12 @@
 using WeatherMe.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Application Insights
+builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -30,5 +35,20 @@ app.UseHttpsRedirection();
 app.UseCors("AllowReactApp");
 app.UseAuthorization();
 app.MapControllers();
+
+// Global exception logging
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Unhandled exception occurred while processing request");
+        throw;
+    }
+});
 
 app.Run();
