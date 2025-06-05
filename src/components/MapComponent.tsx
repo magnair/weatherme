@@ -3,6 +3,7 @@ import { Box, Paper, ToggleButton, Typography, Dialog, DialogTitle, DialogConten
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import { getMarkers, addMarker, WeatherMarker, updateMarker, deleteMarker } from '../services/markerService';
 
 const containerStyle = {
   width: '100vw',
@@ -24,6 +25,11 @@ interface MarkerData {
   label: string;
   id: string; // Add this for better tracking
 }
+  
+// NOTE: If you see a 404 error from getMarkers/addMarker, ensure your backend API is running
+// and that the frontend is correctly proxying requests to /api/WeatherMarkers.
+// For Create React App, check 'proxy' in package.json. For Vite/Next, check your dev server config.
+// Also verify the backend exposes the /api/WeatherMarkers endpoint.
 
 const MapComponent: React.FC = () => {
   const [markers, setMarkers] = useState<MarkerData[]>([]);
@@ -39,10 +45,10 @@ const MapComponent: React.FC = () => {
 
   const getCustomMarkerIcon = () => ({
     path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
-    fillColor: "#FF0000",
-    fillOpacity: 1,
+    fillColor: "#4ed97c",
+    fillOpacity: 0.4,
     strokeWeight: 1,
-    strokeColor: "#FFFFFF",
+    strokeColor: "#b4bfb7 ",
     scale: 2,
     anchor: new google.maps.Point(12, 24),
     labelOrigin: new google.maps.Point(12, 9)
@@ -95,6 +101,14 @@ const MapComponent: React.FC = () => {
 
   // Cleanup on unmount
   React.useEffect(() => {
+    // Fetch markers from API on mount
+    getMarkers().then(apiMarkers => {
+      setMarkers(apiMarkers.map(m => ({
+        id: m.id!,
+        label: m.label,
+        position: { lat: m.latitude, lng: m.longitude }
+      })));
+    });
     return () => {
       if (watchId.current) {
         navigator.geolocation.clearWatch(watchId.current);
@@ -112,14 +126,23 @@ const MapComponent: React.FC = () => {
     setDialogOpen(true);
   };
 
-  const handleAddMarker = () => {
+  const handleAddMarker = async () => {
     if (tempMarker) {
-      const newMarker: MarkerData = {
-        position: tempMarker,
+      const markerToAdd = {
         label: newLabel || `Location ${markers.length + 1}`,
-        id: Date.now().toString() // Add unique identifier
+        latitude: tempMarker.lat,
+        longitude: tempMarker.lng
       };
-      setMarkers([...markers, newMarker]);
+      try {
+        const saved = await addMarker(markerToAdd);
+        setMarkers([...markers, {
+          id: saved.id!,
+          label: saved.label,
+          position: { lat: saved.latitude, lng: saved.longitude }
+        }]);
+      } catch (e) {
+        alert('Failed to save marker ' + e);
+      }
       setDialogOpen(false);
       setNewLabel('');
       setTempMarker(null);
@@ -127,22 +150,48 @@ const MapComponent: React.FC = () => {
   };
 
   const handleMarkerRightClick = (index: number) => {
+
+    const markerToDelete = markers.at(index) as MarkerData;
+    deleteMarker(markerToDelete.id).catch(e => {
+      console.error('Failed to delete marker:', e);
+    })
+
     const newMarkers = markers.filter((_, i) => i !== index);
     setMarkers(newMarkers);
   };
 
-  const handleMarkerDragEnd = (index: number, event: google.maps.MapMouseEvent) => {
+  const handleMarkerDragEnd = async (index: number, event: google.maps.MapMouseEvent) => {
     if (!event.latLng) return;
-    
+
+    const newLat = event.latLng.lat();
+    const newLng = event.latLng.lng();
+    const marker = markers[index];
+
+    // Update local state
     const newMarkers = [...markers];
     newMarkers[index] = {
-      ...newMarkers[index],
+      ...marker,
       position: {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng()
+        lat: newLat,
+        lng: newLng
       }
     };
     setMarkers(newMarkers);
+
+    // Persist update to backend
+    try {
+      await updateMarker(
+        marker.id,
+        {
+          label: marker.label,
+          latitude: newLat,
+          longitude: newLng
+        }
+      );
+    } catch (e) {
+      // Optionally revert state or show error
+      alert('Failed to update marker location: ' + e);
+    }
   };
 
   const onLoad = useCallback((map: google.maps.Map) => {
@@ -205,7 +254,7 @@ const MapComponent: React.FC = () => {
               label={{
                 text: marker.label,
                 fontWeight: 'bold',
-                color: 'white'
+                color: 'black'
               }}
               icon={getCustomMarkerIcon()}
               onRightClick={() => handleMarkerRightClick(index)}
@@ -218,10 +267,10 @@ const MapComponent: React.FC = () => {
               position={userLocation}
               icon={{
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                fillColor: "#4285F4",
+                scale: 14,
+                fillColor: "#ffffff",
                 fillOpacity: 1,
-                strokeColor: "#FFFFFF",
+                strokeColor: "#fffff",
                 strokeWeight: 2,
               }}
             />
