@@ -19,6 +19,13 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
             .AllowAnyHeader());
+
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://magnair.github.io")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 // Add DbContext with PostgreSQL
