@@ -3,7 +3,7 @@ import { Box, Paper, ToggleButton, Typography, Dialog, DialogTitle, DialogConten
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { getMarkers, addMarker, WeatherMarker, updateMarker, deleteMarker } from '../services/markerService';
+import { getMarkers, addMarker, updateMarker, deleteMarker } from '../services/markerService';
 
 const containerStyle = {
   width: '100vw',
