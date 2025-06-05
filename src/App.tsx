@@ -8,15 +8,14 @@ import Weather from './weather';
 import About from './about';
 import Menu from './components/menuComponent';
 import KanbanBoard from './components/kanbanComponent';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import GlobeComponent from './components/GlobeComponent';
 
 
 function App() {  
   return (
     <div>
-      <Router>
-      <Menu />
+        <Menu />
         <Routes>
           <Route path="/" element={<Weather />} />
           <Route index element={<Weather />} />
@@ -27,7 +26,6 @@ function App() {
           <Route path="/map2" element={<Map2Component />} />
           <Route path="/globe" element={<GlobeComponent />} />
         </Routes>
-      </Router>
     </div>
   );
 }
