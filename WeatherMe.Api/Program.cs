@@ -14,24 +14,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        builder => builder
-            .WithOrigins("http://localhost:3000")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-
-     options.AddPolicy("AllowReactApp",
-        builder => builder
-            .WithOrigins("hhttps://magnair.github.io/")
-             .AllowAnyMethod()
-            .AllowAnyHeader());
-
-    // options.AddPolicy("AllowFrontend", policy =>
-    // {
-    //     policy.WithOrigins("https://magnair.github.io")
-    //           .AllowAnyHeader()
-    //           .AllowAnyMethod();
-    // });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://magnair.github.io"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
 });
 
 // Add DbContext with PostgreSQL
