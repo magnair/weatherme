@@ -20,12 +20,18 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.WithOrigins("https://magnair.github.io")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+     options.AddPolicy("AllowReactApp",
+        builder => builder
+            .WithOrigins("hhttps://magnair.github.io/")
+             .AllowAnyMethod()
+            .AllowAnyHeader());
+
+    // options.AddPolicy("AllowFrontend", policy =>
+    // {
+    //     policy.WithOrigins("https://magnair.github.io")
+    //           .AllowAnyHeader()
+    //           .AllowAnyMethod();
+    // });
 });
 
 // Add DbContext with PostgreSQL
