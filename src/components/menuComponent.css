@@ -131,7 +131,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .desktopMenu {
     display: none;
   }
@@ -150,7 +150,7 @@
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1201px) {
   .mobileMenuButton {
     display: none;
   }
