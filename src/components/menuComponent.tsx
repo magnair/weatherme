@@ -10,7 +10,6 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
-  Container,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -37,29 +36,33 @@ const Menu: React.FC = () => {
 
   return (
     <AppBar 
-      position="static" 
+      position="fixed" 
       className="header"
       sx={{ 
         // Remove backgroundColor override
         boxShadow: 'none !important',
-        borderBottom: 'none'
+        borderBottom: 'none',
+        zIndex: 1100 // Ensure header stays above other content
       }}
     >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Toolbar disableGutters className="header-toolbar">
+        {/* Left section - Logo */}
+        <Box className="header-left" padding="0 16px">
           <Typography
             variant="h6"
             component={Link}
             to="/"
             className="logo"
             sx={{
-              flexGrow: { xs: 1, md: 0 },
               fontSize: { xs: '1.2rem', md: '2.5rem' }
             }}
           >
             WeatherMe
           </Typography>
+        </Box>
 
+        {/* Center section - Menu items */}
+        <Box className="header-center">
           <Box className="desktopMenu">
             {menuItems.map((item) => (
               <Typography
@@ -68,23 +71,25 @@ const Menu: React.FC = () => {
                 to={item.path}
                 className="menuItem"
                 sx={{
-                  fontSize: '1.1rem',  // Add direct MUI styling
-                  // ...rest of existing sx props if any
+                  fontSize: '1.1rem',
                 }}
               >
                 {item.text}
               </Typography>
             ))}
           </Box>
+        </Box>
 
+        {/* Right section - Hamburger */}
+        <Box className="header-right">
           <IconButton
             className="mobileMenuButton"
             onClick={() => setDrawerOpen(true)}
           >
             <MenuIcon />
           </IconButton>
-        </Toolbar>
-      </Container>
+        </Box>
+      </Toolbar>
 
       <Drawer
         anchor="right"

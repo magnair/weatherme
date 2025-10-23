@@ -16,16 +16,18 @@ function App() {
   return (
     <div>
         <Menu />
-        <Routes>
-          <Route path="/" element={<Weather />} />
-          <Route index element={<Weather />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Weather />} />
-          <Route path="/board" element={<KanbanBoard />} />
-          <Route path="/map" element={<MapComponent />} />
-          <Route path="/map2" element={<Map2Component />} />
-          <Route path="/globe" element={<GlobeComponent />} />
-        </Routes>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Weather />} />
+            <Route index element={<Weather />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Weather />} />
+            <Route path="/board" element={<KanbanBoard />} />
+            <Route path="/map" element={<MapComponent />} />
+            <Route path="/map2" element={<Map2Component />} />
+            <Route path="/globe" element={<GlobeComponent />} />
+          </Routes>
+        </div>
     </div>
   );
 }

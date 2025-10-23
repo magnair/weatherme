@@ -7,7 +7,42 @@
   border-bottom: none;
   display: flex;
   align-items: center;
-  padding: 0 var(--spacing-lg);
+  padding: 0;
+}
+
+/* Header toolbar - 3 equal sections */
+.header-toolbar {
+  display: flex !important;
+  width: 100% !important;
+  min-height: 80px !important;
+  align-items: center !important;
+  padding: 0 var(--spacing-sm) 0 var(--spacing-lg) !important;
+}
+
+/* Left section - Logo fixed to left */
+.header-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0;
+}
+
+/* Center section - Menu items centered */
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Right section - Hamburger fixed to right */
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 16px;
 }
 
 .logo {
@@ -17,14 +52,14 @@
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-base);
   font-size: var(--font-size-lg);
-  padding: 0 var(--spacing-md);
+  padding: 0;
 }
 
 /* Desktop menu styles */
 .desktopMenu {
   display: flex;
-  flex-grow: 1;
-  margin-left: var(--spacing-xxl);
+  align-items: center;
+  gap: var(--spacing-lg);
 }
 
 .desktopMenu .menuItem,
@@ -100,11 +135,31 @@
   .desktopMenu {
     display: none;
   }
+  
+  /* On mobile, let logo take more space and hamburger stays right */
+  .header-left {
+    flex: 2;
+  }
+  
+  .header-center {
+    flex: 0;
+  }
+  
+  .header-right {
+    flex: 0 0 auto;    
+  }
 }
 
 @media (min-width: 901px) {
   .mobileMenuButton {
     display: none;
+  }
+  
+  /* On desktop, all sections get equal space */
+  .header-left,
+  .header-center,
+  .header-right {
+    flex: 1;
   }
 }
 
@@ -116,6 +171,12 @@
 
 .drawer-header {
   background-color: #11133C;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 var(--spacing-sm);
+  padding-right: 8px;
+  min-height: 80px;
 }
 
 .drawer-close-button {

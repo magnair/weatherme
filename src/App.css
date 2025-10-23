@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+/* Main content area - account for fixed header */
+.main-content {
+  padding-top: 80px; /* Match the min-height of header */
+  min-height: calc(100vh - 80px); /* Ensure full height minus header */
+}
