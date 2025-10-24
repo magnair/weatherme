@@ -16,6 +16,7 @@ interface WeatherComponentProps {
 }
 
 const WeatherComponent: React.FC<WeatherComponentProps> = ({ weatherData }) => {
+
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -40,7 +41,7 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ weatherData }) => {
                                     <img 
                                         src={`${process.env.PUBLIC_URL}/icons/weather/png/${data.weatherCode}.png`} 
                                         width="35" 
-                                        alt="Weather Icon" 
+                                         alt={data.weatherCode}
                                     />
                                 </TableCell>
                                 <TableCell style={{ color: data.windSpeed > 5 ? 'green' : 'inherit' }}>

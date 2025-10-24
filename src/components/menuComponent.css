@@ -64,8 +64,7 @@
 
 .desktopMenu .menuItem,
 .MuiTypography-root.menuItem {
-  color: var(--color-white) !important;
-  padding: var(--spacing-xl) var(--spacing-lg);
+  color: var(--color-white) !important;  
   text-decoration: none;
   font-size: var(--font-size-md) !important;
   font-weight: var(--font-weight-regular);
@@ -131,7 +130,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
   .desktopMenu {
     display: none;
   }
@@ -150,7 +149,7 @@
   }
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 901px) {
   .mobileMenuButton {
     display: none;
   }

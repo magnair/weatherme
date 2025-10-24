@@ -54,7 +54,7 @@ const Menu: React.FC = () => {
             to="/"
             className="logo"
             sx={{
-              fontSize: { xs: '1.2rem', md: '2.5rem' }
+              fontSize: { xs: '1.2rem', md: '2rem' }
             }}
           >
             WeatherMe
