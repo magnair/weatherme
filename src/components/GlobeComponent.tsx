@@ -9,7 +9,7 @@ const GlobeComponent: React.FC = () => {
                 <Box className="content-wrapper" margin={5} padding={1}>
                     {/* Left Content */}
                     <Box className="left-content"  margin={1} >
-                        <Typography variant="h1" className="main-heading">
+                        <Typography variant="h2" className="main-heading">
                             Vi går foran og bygger fremtidens samfunn
                         </Typography>
                         <Typography className="description-text">
