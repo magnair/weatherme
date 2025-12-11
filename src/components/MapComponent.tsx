@@ -239,7 +239,7 @@ const MapComponent: React.FC = () => {
         </Box>
       </Paper>
       
-      <LoadScript googleMapsApiKey='AIzaSyA4RdNHzKv_NXhtclsTx54rj-G63fIubSM'>
+      <LoadScript googleMapsApiKey='todo inject_your_api_key_here'>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={mapCenter}
