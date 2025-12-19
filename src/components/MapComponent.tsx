@@ -5,6 +5,8 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { getMarkers, addMarker, updateMarker, deleteMarker } from '../services/markerService';
 
+const googleMapsApiKey = (process.env.REACT_APP_GOOGLE_MAPS_API_KEY ?? '').trim();
+
 const containerStyle = {
   width: '100vw',
   height: 'calc(100vh - 64px)', // Subtract AppBar height (64px)
@@ -239,7 +241,7 @@ const MapComponent: React.FC = () => {
         </Box>
       </Paper>
       
-      <LoadScript googleMapsApiKey='todo inject_your_api_key_here'>
+      <LoadScript googleMapsApiKey={googleMapsApiKey}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={mapCenter}
