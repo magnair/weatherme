@@ -20,9 +20,11 @@ import MapIcon from '@mui/icons-material/Map';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';  // Add this import for weather icon
 import { Link } from 'react-router-dom';
 import './menuComponent.css';  // Update the import to use new CSS file
+import { useAuth } from '../contexts/AuthContext';
 
 const Menu: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user, logout, isAuthenticated } = useAuth();
 
   const menuItems = [
     { text: 'Home', icon: <HomeIcon />, path: '/' },
@@ -127,6 +129,15 @@ const Menu: React.FC = () => {
           ))}
         </List>
       </Drawer>
+
+      {isAuthenticated && (
+        <div className="user-section">
+          <span className="user-name">{user?.name}</span>
+          <button onClick={logout} className="logout-button">
+            Logout
+          </button>
+        </div>
+      )}
     </AppBar>
   );
 };

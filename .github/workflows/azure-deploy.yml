@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_RESOURCE_GROUP: rg-weatherme # Set your Azure Resource Group
+  AZURE_RESOURCE_GROUP: rg-weatherme
   DOTNET_VERSION: '8.0.x'
   API_PROJECT_PATH: WeatherMe.Api/WeatherMe.Api.csproj
 
@@ -44,6 +44,17 @@ jobs:
 
       - name: Publish
         run: dotnet publish ${{ env.API_PROJECT_PATH }} --configuration Release --output ./publish --no-build
+
+      - name: Configure App Settings
+        run: |
+          az webapp config appsettings set \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+            --settings \
+              Authentication__Google__ClientId="${{ secrets.GOOGLE_CLIENT_ID }}" \
+              Jwt__Secret="${{ secrets.JWT_SECRET }}" \
+              Jwt__Issuer="WeatherMeApi" \
+              Jwt__Audience="WeatherMeClient"
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

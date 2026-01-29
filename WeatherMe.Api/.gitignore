@@ -1,0 +1,15 @@
+{
+  "Authentication": {
+    "Google": {
+      "ClientId": "YOUR_GOOGLE_CLIENT_ID"
+    }
+  },
+  "Jwt": {
+    "Secret": "YOUR_LONG_SECRET_KEY_AT_LEAST_32_CHARACTERS",
+    "Issuer": "WeatherMeApi",
+    "Audience": "WeatherMeClient"
+  }
+}
+
+# User secrets
+**/secrets.json
