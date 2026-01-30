@@ -11,8 +11,9 @@ export interface WeatherMarker {
 }
 
 // Use environment variable for API base URL, fallback to local proxy path
-//const API_URL = process.env.REACT_APP_API_BASE_URL || '/api/WeatherMarkers';
-const API_URL = 'https://weatherme-api-6c6hyrflglgjs.azurewebsites.net/api/WeatherMarkers'
+// Use environment variable for API base URL with fallback
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://localhost:5001';
+const API_URL = `${API_BASE_URL}/api/WeatherMarkers`;
 
 export const getMarkers = async (): Promise<WeatherMarker[]> => {
     try {

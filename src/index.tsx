@@ -13,6 +13,7 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+console.log('GOOGLE_CLIENT_ID:', GOOGLE_CLIENT_ID);
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
