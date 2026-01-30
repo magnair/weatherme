@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 
+# Keep .env for local development, but sensitive values should be in GitHub secrets
+# .env.production is committed with empty values - actual values come from CI/CD
+
 .vs/ProjectEvaluation/**
 .vs/weatherme/**
 
