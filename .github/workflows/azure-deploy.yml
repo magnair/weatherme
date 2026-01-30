@@ -71,6 +71,9 @@ jobs:
       - name: Run EF Core Migrations
         env:
           AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          Jwt__Secret: ${{ secrets.JWT_SECRET }}
+          Jwt__Issuer: "WeatherMeApi"
+          Jwt__Audience: "WeatherMeClient"
         run: |
           dotnet tool install --global dotnet-ef
           export PATH="$PATH:/home/runner/.dotnet/tools"
