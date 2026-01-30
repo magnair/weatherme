@@ -51,7 +51,7 @@ jobs:
             --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --name ${{ secrets.AZURE_WEBAPP_NAME }} \
             --settings \
-              Authentication__Google__ClientId="${{ secrets.GOOGLE_CLIENT_ID }}" \
+              Authentication__Google__ClientId="${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}" \
               Jwt__Secret="${{ secrets.JWT_SECRET }}" \
               Jwt__Issuer="WeatherMeApi" \
               Jwt__Audience="WeatherMeClient" \
